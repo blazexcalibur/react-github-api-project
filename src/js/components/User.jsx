@@ -7,7 +7,7 @@ var Link = require('react-router').Link;
 var User = React.createClass({
     propTypes: {
         // PropTypes.shape is like PropTypes.object but lets you define what's expected to be inside the object
-        params: React.PropTypes.shape({
+            params: React.PropTypes.shape({
             username: React.PropTypes.string.isRequired
         })
     },
@@ -26,10 +26,10 @@ var User = React.createClass({
     the data -- in the callback -- we call `setState` to put the user data in our state. This will trigger a re-render.
     When `render` gets called again, `this.state.user` exists and we get the user info display instead of "LOADING..."
     */
-    componentDidMount: function() {
+    fetchData: function(){
         var that = this; // What's this?? Make sure you remember or understand what this line does
         
-        $.getJSON(`https://api.github.com/users/${this.props.params.username}`)
+        $.getJSON(`https://api.github.com/users/${this.props.params.username}?access_token=f0c7019be5d7508d20ce07a828837b7cedad5078`)
             .then(
                 function(user) {
                     // Why that.setState instead of this.setState??
@@ -39,8 +39,20 @@ var User = React.createClass({
                 }
             );
     },
+    componentDidMount: function() {
+        this.fetchData();
+        
+    },
+    componentDidUpdate: function(prevProps){
+        if (prevProps.username!==this.props.username){
+            this.fetchData();
+        }
+        if (prevProps.user!==this.state.user){
+            this.fetchData();
+        }
+    },
     /*
-    This method is used as a mapping function. Eventually this could be factored out to its own component.
+        This method is used as a mapping function. Eventually this could be factored out to its own component.
     */
     renderStat: function(stat) {
         return (
@@ -57,7 +69,6 @@ var User = React.createClass({
         if (!this.state.user) {
             return (<div className="user-page">LOADING...</div>);
         }
-        
         // If we get to this part of `render`, then the user is loaded
         var user = this.state.user;
         
@@ -89,11 +100,11 @@ var User = React.createClass({
                         <h2 className="user-info__title">{user.login} ({user.name})</h2>
                         <p className="user-info__bio">{user.bio}</p>
                     </Link>
-                
                     <ul className="user-info__stats">
                         {stats.map(this.renderStat)}              
                     </ul>
                 </div>
+                {this.props.children}
             </div>
         );
     }

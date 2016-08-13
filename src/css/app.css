@@ -14,13 +14,13 @@ h1,h2,h3,h4,h5,h6 {
     overflow: hidden;
     padding: 0.5rem;
 }
-
+/*
 .main-header h1 {
     line-height: 1;
     margin: 0;
     font-weight: 400;
 }
-
+*/
 .main-header a {
     color: white;
     text-decoration: none;
@@ -104,4 +104,41 @@ h1,h2,h3,h4,h5,h6 {
 .user-info__stat p {
     margin: 0;
     white-space: nowrap;
+}
+.followers {
+    list-style: none;
+    text-decoration: none;
+}
+.followers_icon{
+    width:3em; 
+    height: auto;
+    border-radius: 100%;
+     vertical-align: middle;
+     text-decoration:none
+}
+.followers_link{
+    display: inline-block;
+    text-decoration:none;
+    padding-left: 1em;
+    color: black;
+}
+
+.stargazers {
+    display: inline-block;
+    border-style: solid;
+    margin-left: 1em;
+}
+
+.repo-info__stat {
+    vertical-align: middle;
+    list-style: none;
+}
+
+.repo_url {
+  padding-left: 2em; 
+  text-decoration: none;
+}
+    
+repo {
+    border: 1em;
 }
